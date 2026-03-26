@@ -1,2 +1,2 @@
-# unibg_2026_ai_course
+# UniBG 2026 AI Course
 Repo with all data needed for lessons
