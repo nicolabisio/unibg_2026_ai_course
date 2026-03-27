@@ -1,0 +1,113 @@
+{
+  "name": "The AI Sentiment Butler",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "24a5eb7d-b26b-4cad-a85f-01f9e50a98a0",
+      "name": "When chat message received",
+      "webhookId": "8c9bd223-e54d-4a8a-bedf-74c947e36964"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a Senior Customer Experience Manager. \nAnalyze the customer's comment and provide:\n\n1. SENTIMENT: (Positive, Neutral, or Negative)\n2. KEY ISSUE: (Summarize the main problem in 5 words)\n3. MANAGEMENT ACTION: (Suggest one professional step to take, e.g., 'Send an apology email' or 'Offer a 10% discount').\n\nBe concise and professional."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "87951e36-d352-4da3-9a49-1638931704bb",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "openrouter/free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        160,
+        224
+      ],
+      "id": "f0fabf24-51ca-4c38-9312-98e44672bed2",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "2Kdz0n0CqQw9E6wF",
+          "name": "OpenRouter free"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        304,
+        224
+      ],
+      "id": "749302ca-bafd-4372-a5dc-56432ff19eae",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "fc946f3d-ba58-4043-aabc-81a26faa38c8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f55c2e193f189f3babcfe8ed703747bcbdd060fb2d77661ee0d142de10301659"
+  },
+  "id": "iuN1X8BQ4bLgxY0z",
+  "tags": []
+}
